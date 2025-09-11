@@ -8,7 +8,11 @@ class DataInvestigator:
     def baseline(self, col):
         try:
             col_name = self.df.columns[col]
-            return self.df[col_name].value_counts().idxmax()
+            #check if the column is numeric or categorical
+            if pd.api.types.is_numeric_dtype(self.df[col_name]):
+                return self.df[col_name].mean()
+            else:
+                return self.df[col_name].mode()[0]
         except Exception:
             return None
 
@@ -23,6 +27,7 @@ class DataInvestigator:
     def zeroR(self, col):
         try:
             col_name = self.df.columns[col]
-            return self.df[col_name].value_counts().idxmax()
+            #allows uses mode for both numeric and categorical
+            return self.df[col_name].mode()[0]
         except Exception:
             return None
