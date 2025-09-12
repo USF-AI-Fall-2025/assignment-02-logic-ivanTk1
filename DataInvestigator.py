@@ -10,11 +10,8 @@ class DataInvestigator:
     def baseline(self, col):
         try:
             col_name = self.df.columns[col]
-            #check if the column is numeric or categorical
-            if pd.api.types.is_numeric_dtype(self.df[col_name]):
-                return self.df[col_name].mean()
-            else:
-                return self.df[col_name].mode()[0]
+            #gives the most common exact number
+            return self.df[col_name].value_counts().idxmax()
         except Exception:
             return None
         
@@ -37,26 +34,3 @@ class DataInvestigator:
             return None
         
 
-# Sample data
-data = {
-    "Gender": ["Male", "Male", "Male", "Female", "Female", "Female"],
-    "Height": [73.8, 68.7, 74.1, 65.3, 62.8, 70.2],
-    "Weight": [241.8, 162.3, 212.7, 150.0, 120.5, 180.6]
-}
-
-# Create DataFrame
-df = pd.DataFrame(data)
-
-# Create investigator
-investigator = DataInvestigator(df)
-
-# Test baseline
-print("Baseline (Height):", investigator.baseline(1))   # mean of Height
-print("Baseline (Gender):", investigator.baseline(0))   # mode of Gender
-
-# Test correlation
-print("Correlation (Height vs Weight):", investigator.corr(1, 2))
-
-# Test ZeroR
-print("ZeroR (Gender):", investigator.zeroR(0))
-print("ZeroR (Height):", investigator.zeroR(1))
