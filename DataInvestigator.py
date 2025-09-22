@@ -26,5 +26,8 @@ class DataInvestigator:
     
     #computes ZeroR for a column given its index
     def zeroR(self, col):
-        return baseline(self, col)   
+        return self.baseline(self, col) 
+
+
+      
 
